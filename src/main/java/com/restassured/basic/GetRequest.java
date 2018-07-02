@@ -25,7 +25,8 @@ public class GetRequest {
 	public void doStatusCodeVerification() {
 		given()
 			.param("origins", "Seattle")
-			.param("destinatios", "San Francisco")
+			.param("units", "imperials")
+			.param("destinations", "San Francisco")
 			.param("key", GOOGLE_API_KEY)
 		.when()
 			.get("/distancematrix/json")
@@ -38,7 +39,7 @@ public class GetRequest {
 		//	Using parameters map instead of passing values individually
 		Map<String, String> map = new HashMap<>();
 		map.put("origins", "Seattle");
-		map.put("destinatios", "San Francisco");
+		map.put("destinations", "San Francisco");
 		map.put("key", GOOGLE_API_KEY);
 		Response resp = given()
 			.params(map)
@@ -46,5 +47,4 @@ public class GetRequest {
 			.get("/distancematrix/json");
 		System.out.println(resp.statusCode() + "\n"  + resp.body().prettyPrint());
 	}
-
 }

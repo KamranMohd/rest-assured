@@ -6,6 +6,7 @@ repositories {
 }
 
 dependencies {
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
 	testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
     testCompile 'io.rest-assured:rest-assured:3.1.0'
 }
