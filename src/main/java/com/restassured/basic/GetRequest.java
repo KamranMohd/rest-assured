@@ -1,14 +1,18 @@
 package com.restassured.basic;
 
-import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class GetRequest {
 
-	public static final String GOOGLE_API_KEY = "AIzaSyDhFe-kpBBuYds19YAmTTR7YoQTqkQeMGM";
+	public static final String GOOGLE_API_KEY = "AIzaSyDw4OY0jpkgeyGPyz-ezE1DP_RUDFbaIjc";
 
 	@BeforeClass
 	public void setup() {
@@ -17,8 +21,8 @@ public class GetRequest {
 		RestAssured.basePath = "/maps/api";
 	}
 
-	@Test
-	public void doBasicGet() {
+	@Test(enabled=true)
+	public void doStatusCodeVerification() {
 		given()
 			.param("origins", "Seattle")
 			.param("destinatios", "San Francisco")
@@ -27,6 +31,20 @@ public class GetRequest {
 			.get("/distancematrix/json")
 		.then()
 			.statusCode(200);
+	}
+	
+	@Test
+	public void captureResponseBody(){
+		//	Using parameters map instead of passing values individually
+		Map<String, String> map = new HashMap<>();
+		map.put("origins", "Seattle");
+		map.put("destinatios", "San Francisco");
+		map.put("key", GOOGLE_API_KEY);
+		Response resp = given()
+			.params(map)
+		.when()
+			.get("/distancematrix/json");
+		System.out.println(resp.statusCode() + "\n"  + resp.body().prettyPrint());
 	}
 
 }
